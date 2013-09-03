@@ -54,9 +54,9 @@ class EventsAPI {
   private $parser_options = FALSE;
 
   /**
-   * Events display mode.
+   * Events full display flag.
    */
-  private $display;
+  private $full;
 
   /**
    * Optional JSONP callback.
@@ -316,6 +316,11 @@ class EventsAPI {
   /**
    * Set filters that should be passed to the API backend.
    *
+   * @code
+   *   $api = new EventsAPI('secret');
+   *   $api->setFilter('month', array('month' => 9, 'year' => 2013));
+   * @endcode
+   *
    * @todo: These filters are not validated, so it's possible to overwrite
    * the `display', `api_key' and other required parameters currently.
    */
@@ -328,7 +333,7 @@ class EventsAPI {
    * Set a flag to retrieve full event info.
    */
   function displayFull() {
-    $this->display = 'full';
+    $this->full = 'true';
   }
 
   /**
@@ -389,8 +394,8 @@ class EventsAPI {
 
     // Use the global display flag to determine if the user wants
     // a full event display.
-    if (!empty($this->display)) {
-      $params['display'] = $this->display;
+    if (!empty($this->full)) {
+      $params['full'] = $this->full;
     }
 
     // Add the callback if set.
